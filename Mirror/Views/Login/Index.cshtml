@@ -1,0 +1,124 @@
+﻿@{
+    Layout = null;
+}
+
+@model string[]
+
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Авторизация</title>
+    <link rel="stylesheet" href="/css/login_styles.css">
+    <link rel="stylesheet" href="/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css">
+    <style>
+        body {
+            font-size: 16px;
+        }</style>
+    <style>
+        body {
+            background-color: #f3f3f3 !important;
+        }
+
+        .btn {
+            background-color: #36b95e !important;
+            border: none !important;
+            transition: background-color 200ms ease;
+            cursor: pointer !important;
+        }
+
+            .btn:hover {
+                background-color: #32aa56 !important;
+            }
+
+        .login-card-body {
+            border-radius: 12px !important;
+        }
+
+        .alert {
+            position: relative;
+            padding: 1rem 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .alert-danger {
+            color: #842029;
+            background-color: #f8d7da;
+            border-color: #f5c2c7;
+        }
+
+        .bd-example > .alert + .alert {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body class="login-page" style="min-height: 310.781px;">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="/"><img src="/images/mpstats_logo.svg" style="width: 150px;"></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Войдите для перехода в кабинет</p>
+                <form action="/login" method="post">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Логин" name="login">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Пароль" name="password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @if(Model != null)
+                    {
+                        @foreach (string str in Model)
+                        {
+                            <div class="alert alert-danger" role="alert">
+                                @str
+                            </div>
+                        }
+                    }
+
+
+                    <div class="row">
+                        <div class="col-8">
+                        </div>
+                        <!-- /.col -->
+
+
+
+                        <div class="col-4">
+
+                            <button type="submit" class="btn btn-primary btn-block">Войти</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <!-- Bootstrap 4 -->
+    <!-- AdminLTE App -->
+    <!-- Visual Studio Browser Link -->
+    <!-- End Browser Link -->
+    <live-preview-root></live-preview-root>
+</body>
+</html>

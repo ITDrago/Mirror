@@ -1,0 +1,142 @@
+﻿@model Mirror.Models.User
+
+@{
+    ViewData["Header"] = $"Статистика пользователя \"{Model.Username}\"";
+
+    (string day, int count)[] _authStat = ((string day, int count)[])ViewBag.AuthStat;
+    (string day, int count)[] _requestStat = ((string day, int count)[])ViewBag.RequestStat;
+    (string day, int count)[] _screenStat = ((string day, int count)[])ViewBag.ScreenStat;
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="row">
+    <div class="col-md-4">
+
+        <canvas id="logins-chart"></canvas>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <canvas id="requests-chart"></canvas>
+
+    </div>
+
+    <div class="col-md-4">
+
+        <canvas id="screen-chart"></canvas>
+
+    </div>
+</div>
+
+<br/>
+
+<div>
+    <a asp-action="Index">Назад к списку аккаунтов</a>
+</div>
+
+<script>
+        const chartData = {
+          labels: [
+              @foreach(var authGroup in _authStat) 
+              { 
+                  @Html.Raw("'")@authGroup.day@Html.Raw("'")
+                  @Html.Raw(",")
+              }
+          ],
+          datasets: [
+            {
+              label: 'Авторизации',
+              backgroundColor: 'rgba(95, 179, 5, 0.2)',
+              borderColor: 'rgba(95, 179, 5, 1)',
+              borderWidth: 1,
+              data: [
+                  @foreach(var authGroup in _authStat) 
+                  { 
+                      @authGroup.count
+                      @Html.Raw(",")
+                  }
+              ],
+            },
+          ],
+        };
+
+        const ctx = document.getElementById('logins-chart').getContext('2d');
+        const myChart = new Chart(ctx, {
+          type: 'bar',
+          data: chartData,
+        });
+</script>
+
+
+
+<script>
+        const chartData2 = {
+          labels: [
+              @foreach(var requestGroup in _requestStat) 
+              { 
+                  @Html.Raw("'")@requestGroup.day@Html.Raw("'")
+                  @Html.Raw(",")
+              }
+          ],
+          datasets: [
+            {
+              label: 'Запросы',
+              backgroundColor: 'rgba(95, 179, 5, 0.2)',
+              borderColor: 'rgba(95, 179, 5, 1)',
+              borderWidth: 1,
+              data: [
+                  @foreach(var requestGroup in _requestStat) 
+                  { 
+                      @requestGroup.count
+                      @Html.Raw(",")
+                  }
+              ],
+            },
+          ],
+        };
+
+        const ctx2 = document.getElementById('requests-chart').getContext('2d');
+        const myChart2 = new Chart(ctx2, {
+          type: 'bar',
+          data: chartData2,
+        });
+</script>
+
+<script>
+        const chartData3 = {
+          labels: [
+              @foreach(var screenGroup in _screenStat) 
+              { 
+                  @Html.Raw("'")@screenGroup.day@Html.Raw("'")
+                  @Html.Raw(",")
+              }
+          ],
+          datasets: [
+            {
+              label: 'Проведено на сайте (минут)',
+              backgroundColor: 'rgba(95, 179, 5, 0.2)',
+              borderColor: 'rgba(95, 179, 5, 1)',
+              borderWidth: 1,
+              data: [
+                  @foreach(var screenGroup in _screenStat) 
+                  { 
+                      @screenGroup.count
+                      @Html.Raw(",")
+                  }
+              ],
+            },
+          ],
+        };
+
+        const ctx3 = document.getElementById('screen-chart').getContext('2d');
+        const myChart3 = new Chart(ctx3, {
+          type: 'bar',
+          data: chartData3,
+        });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

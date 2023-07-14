@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Mirror.Models.CssRule>
+
+@{
+    ViewData["Header"] = "CSS правила";
+}
+
+<div class="form-group">
+    <a asp-action="Create" class="btn btn-primary">Создать новое правило</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CssCode)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CssCode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Редактировать</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id" style="color: #d85b5b!important;">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
